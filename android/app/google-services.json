@@ -1,0 +1,134 @@
+{
+  "project_info": {
+    "project_number": "204700797754",
+    "project_id": "clashorg-1f113",
+    "storage_bucket": "clashorg-1f113.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:204700797754:android:b9f72d81bf2d6caac01e03",
+        "android_client_info": {
+          "package_name": "com.example.flutter_application_1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "204700797754-718i4kaegobloodv2a2c408r4ldaq085.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.flutter_application_1",
+            "certificate_hash": "9fda68aeb0222ee971d5c44754349767ec60541d"
+          }
+        },
+        {
+          "client_id": "204700797754-o6alpaoic96cuje73dtmih22naj34262.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyASoAVV_gAFnVAK4jjksxi4ruGk_RqfsSE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "204700797754-o6alpaoic96cuje73dtmih22naj34262.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "204700797754-14eojv7utta6tqkopsptiha3kp4pbkta.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.flutterApplication2"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:204700797754:android:1038d5144a893a38c01e03",
+        "android_client_info": {
+          "package_name": "com.example.flutter_application_2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "204700797754-o6alpaoic96cuje73dtmih22naj34262.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyASoAVV_gAFnVAK4jjksxi4ruGk_RqfsSE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "204700797754-o6alpaoic96cuje73dtmih22naj34262.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "204700797754-14eojv7utta6tqkopsptiha3kp4pbkta.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.flutterApplication2"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:204700797754:android:e8ea6a5c0797c5ffc01e03",
+        "android_client_info": {
+          "package_name": "com.flutter_application_2.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "204700797754-u239tii0bcfcea05d6mj2dadefi6s5fi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.flutter_application_2.app",
+            "certificate_hash": "9fda68aeb0222ee971d5c44754349767ec60541d"
+          }
+        },
+        {
+          "client_id": "204700797754-o6alpaoic96cuje73dtmih22naj34262.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyASoAVV_gAFnVAK4jjksxi4ruGk_RqfsSE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "204700797754-o6alpaoic96cuje73dtmih22naj34262.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "204700797754-14eojv7utta6tqkopsptiha3kp4pbkta.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.flutterApplication2"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
