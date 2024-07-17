@@ -13,7 +13,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
    List<ChatUser> lists = [];
- 
+    bool _isSearching = false;
 
   @override
   Widget build(BuildContext context) {
@@ -21,9 +21,21 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         centerTitle: true,
         title: Text("CLASH"),
-        leading: Icon(Icons.home),
+        leading:_isSearching ?
+        TextField(
+          style: TextStyle(
+            hintText: 
+          ),
+        )
+        : 
+        Icon(Icons.home),
         actions: [
-          IconButton(onPressed: (){}, icon: Icon(Icons.search)),
+          IconButton(onPressed: (){
+            setState(() {
+              var _isSearching = !_isSearching;
+            });
+
+          }, icon: Icon(Icons.search)),
           IconButton(onPressed: (){
             Navigator.push(context, MaterialPageRoute(builder: (_)=> ProfileScreen(  user: APIs.me)));
           }, icon: Icon(Icons.settings)),

@@ -18,17 +18,23 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: FocusScope.of(context).unfocus,//to turn off keyboard by tuching anywhere on screen
+    onTap: FocusScope.of(context).unfocus,//to turn off keyboard by tuching anywhere on screen
     child:Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title: Text("Your Profile"),
         ),
         
-      body:Padding(padding: EdgeInsets.symmetric(horizontal: 10) ,child: Column(
+      body:Form(//the form is here for validation and updationn really good one
+        key:_formKey,
+        child:  Padding(
+        padding: EdgeInsets.symmetric(horizontal: 10) ,
+        child: Column(
         children: [
            ClipRRect(
           borderRadius: BorderRadius.circular(10),
@@ -42,10 +48,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
           Text(widget.user.email),
           TextFormField(
             initialValue: widget.user.name,
+            onSaved: (value) => APIs.me.name = value ?? "",
+            validator: (value) => value != null && value.isNotEmpty ? null : 'Required Field' ,
             decoration: InputDecoration(prefixIcon:Icon(Icons.person,),label:Text("Name")),
           ),
           TextFormField(
             initialValue: widget.user.about,
+            onSaved: (value) => APIs.me.about = value ?? "",
+            validator: (value) => value != null && value.isNotEmpty ? null : 'Required Field' ,
             decoration: InputDecoration(prefixIcon:Icon(Icons.info,),label:Text("Name")),
           ),
           ElevatedButton.icon(
@@ -53,10 +63,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
             label: Text("EDIT"),
             
             
-            onPressed: (){})
+            onPressed: (){
+              APIs.updateUserInfo();
+            })
 
         ]
-      ),),
+      ),),),
       floatingActionButton: Padding(padding: EdgeInsets.only(bottom: 0.05),
         child:FloatingActionButton.extended(
           backgroundColor: Colors.grey,
