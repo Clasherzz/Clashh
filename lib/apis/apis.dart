@@ -12,7 +12,7 @@ class APIs{
   static FirebaseFirestore firestore = FirebaseFirestore.instance;
   static User get user => auth.currentUser!;
 
-
+  static late ChatUser me;
   static Future<bool> userExists() async {
     return (await firestore
     .collection("users")
@@ -23,6 +23,7 @@ class APIs{
   }
 
   static Future<void> createUser() async {
+
     final time = DateTime.now().millisecondsSinceEpoch.toString();
     final chatUser = ChatUser(
       image: user.photoURL.toString(), 
@@ -44,5 +45,19 @@ class APIs{
     ;
 
   }
+  
+  static Future<void> getSelfInfo() async{
+      await firestore.collection("users").doc(user.uid).get().then((user) async {
+        if(user.exists){
+            me = ChatUser.fromJson(user.data()!);
+        }else{
+          await createUser().then((value)=>{
+            getSelfInfo()
+          }
+          
+          );
 
+        }
+      });
+  }
 }
