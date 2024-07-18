@@ -13,6 +13,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
    List<ChatUser> lists = [];
+   final List<ChatUser> _searchList = [];
     bool _isSearching = false;
 
   @override
@@ -20,19 +21,32 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text("CLASH"),
-        leading:_isSearching ?
+       
+        title:_isSearching ?
         TextField(
-          style: TextStyle(
-            hintText: 
+          onChanged: (value) => {
+            for(ChatUser val in lists){
+              if(val.name.toLowerCase().contains(value.toLowerCase())){
+
+              }
+            }
+          },
+          decoration: InputDecoration(
+            hintText: "Enter name or email",
+            border: InputBorder.none,
+            
+            
           ),
-        )
-        : 
-        Icon(Icons.home),
+          autofocus: true,
+
+          ):Text("We Chat"),
+          
+        
+        leading:Icon(Icons.home),
         actions: [
           IconButton(onPressed: (){
             setState(() {
-              var _isSearching = !_isSearching;
+             _isSearching = ! _isSearching;
             });
 
           }, icon: Icon(Icons.search)),
