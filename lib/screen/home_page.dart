@@ -39,7 +39,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           autofocus: true,
 
-          ):Text("We Chat"),
+          ):Text("CLASH"),
           
         
         leading:Icon(Icons.home),
@@ -76,6 +76,7 @@ class _MyHomePageState extends State<MyHomePage> {
         if(lists.isNotEmpty){
         return ListView.builder(
           itemCount: lists.length,
+          
           itemBuilder: (context,index){
             // return Text('name : ${lists[index]}');
             return ChatUserCard(user: lists[index]);

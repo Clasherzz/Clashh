@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_application_2/main.dart';
+import 'package:flutter_application_2/screen/chat_screen.dart';
 import '../models/user.dart';
 
 
@@ -21,7 +22,10 @@ class _ChatUserCardState extends State<ChatUserCard> {
     return Card(
       
       child:ListTile(
-        onTap: (){},
+        onTap: (){
+            Navigator.push(context,MaterialPageRoute(builder: (_) => ChatScreen(user: widget.user) ));
+
+        },
 
 
         // 

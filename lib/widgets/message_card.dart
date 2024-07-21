@@ -36,14 +36,35 @@ class _MessageCardState extends State<MessageCard> {
           )
         ),
         child:Text(widget.message.msg)
-      ),)
+      ),),
       Text(widget.message.sent),
-    ],)
+    ],);
 
 
     
   }
   Widget _greenMessage(){
+    return Row(children: [
+  
+      //mainAxisAlignment: MainAxisAlignment.spaceBetween
+      Flexible(
+      child:Container(
+        padding: EdgeInsets.all(1),
+        
+        decoration: BoxDecoration(
+          color: Colors.grey,
+          border: Border.all(color: Colors.black),
+          borderRadius: BorderRadius.only(
+            topLeft:Radius.circular(30) ,
+            topRight: Radius.circular(30),
+            bottomRight: Radius.circular(30),
+          )
+        ),
+        child:Text(widget.message.msg)
+      ),),
+      Text(widget.message.sent),
+
+    ],);
         
       
       
