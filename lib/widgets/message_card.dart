@@ -1,5 +1,7 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_application_2/apis/apis.dart';
 import 'package:flutter_application_2/models/message.dart';
 
 class MessageCard extends StatefulWidget {
@@ -13,14 +15,20 @@ class MessageCard extends StatefulWidget {
 class _MessageCardState extends State<MessageCard> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return APIs.user.uid == widget.message.fromId ? _greenMessage() : _blueMessage();
   }
 
   Widget _blueMessage(){
     return Row(children: [
-      Container(
+  
+      //mainAxisAlignment: MainAxisAlignment.spaceBetween
+      Flexible(
+      child:Container(
+        padding: EdgeInsets.all(1),
         
         decoration: BoxDecoration(
+          color: Colors.grey,
+          border: Border.all(color: Colors.black),
           borderRadius: BorderRadius.only(
             topLeft:Radius.circular(30) ,
             topRight: Radius.circular(30),
@@ -28,7 +36,16 @@ class _MessageCardState extends State<MessageCard> {
           )
         ),
         child:Text(widget.message.msg)
-      )
+      ),)
+      Text(widget.message.sent),
     ],)
+
+
+    
+  }
+  Widget _greenMessage(){
+        
+      
+      
   }
 }

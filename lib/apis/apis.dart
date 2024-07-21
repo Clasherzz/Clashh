@@ -4,6 +4,7 @@ import 'dart:core';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_application_2/models/message.dart';
 import 'package:flutter_application_2/models/user.dart';
 class APIs{
   static FirebaseAuth auth = FirebaseAuth.instance;
@@ -68,5 +69,33 @@ class APIs{
         "about":me.about
       }
     );
+  }
+
+  static String getConversationId(String id){
+    return user.uid.hashCode <= id.hashCode ? '${user.uid}_${id}' : '${id}_${user.uid}';
+  }
+
+  static Stream<QuerySnapshot<Map<String,dynamic>>> getAllMessages(ChatUser chatUser) {
+    return  firestore.collection('chats/${getConversationId(chatUser.id)}/messages').snapshots();
+  } 
+
+  static Future<void> sendMessage(ChatUser chatUser,String chatMessage)async{
+    final time =DateTime.now().millisecondsSinceEpoch.toString();
+    
+    
+    final Message message = Message(
+      fromId:user.uid ,
+      msg: chatMessage,
+      read:"",
+      type:Type.text,
+      toId: chatUser.id,
+      sent: time
+    );
+
+
+    final ref = firestore.collection('chats/${getConversationId(chatUser.id)}/messages');
+    await ref.doc(time).set(message.toJson());
+
+
   }
 }

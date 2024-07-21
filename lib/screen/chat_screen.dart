@@ -14,6 +14,7 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
+  final _textcontroller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
