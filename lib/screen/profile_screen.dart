@@ -56,7 +56,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             initialValue: widget.user.about,
             onSaved: (value) => APIs.me.about = value ?? "",
             validator: (value) => value != null && value.isNotEmpty ? null : 'Required Field' ,
-            decoration: InputDecoration(prefixIcon:Icon(Icons.info,),label:Text("Name")),
+            decoration: InputDecoration(prefixIcon:Icon(Icons.info,),label:Text("About")),
           ),
           ElevatedButton.icon(
             icon: Icon(Icons.edit),
@@ -86,7 +86,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           }, label: Text("Logout"),icon:Icon(Icons.logout))
       ),
       
-      //body:
+     
        
     ));
   }

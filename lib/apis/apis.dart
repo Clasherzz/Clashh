@@ -98,4 +98,9 @@ class APIs{
 
 
   }
+
+
+  // static Future<void> sendChatImage(ChatUser chatuser,File file){
+  //    var ref = 
+  // }
 }

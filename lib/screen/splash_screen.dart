@@ -20,6 +20,8 @@ class _SplashScreenState extends State<SplashScreen> {
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (_)=> const MyHomePage()));
     });
   }
+  
+  
   Widget build(BuildContext context) {
     mq = MediaQuery.of(context).size.height;
     return Scaffold(

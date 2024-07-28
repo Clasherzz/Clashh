@@ -5,7 +5,8 @@ import 'package:flutter_application_2/screen/home_page.dart';
 import 'package:flutter_application_2/screen/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 // import 'firebase_options.dart';
-late double mq;
+late var mq;
+
 void main() async{
     WidgetsFlutterBinding.ensureInitialized();
 

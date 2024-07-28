@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/apis/apis.dart';
+import 'package:flutter_application_2/main.dart';
 import 'package:flutter_application_2/models/user.dart';
+import 'package:flutter_application_2/screen/auth/login_screen.dart';
 import 'package:flutter_application_2/screen/profile_screen.dart';
 import 'package:flutter_application_2/widgets/chat_user_card.dart';
 
@@ -18,6 +20,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    mq = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -25,19 +28,25 @@ class _MyHomePageState extends State<MyHomePage> {
         title:_isSearching ?
         TextField(
           onChanged: (value) => {
+            _searchList.clear(),
             for(ChatUser val in lists){
-              if(val.name.toLowerCase().contains(value.toLowerCase())){
-
-              }
+              if(val.name.toLowerCase().contains(value.toLowerCase())||val.email.toLowerCase().contains(value.toLowerCase())){
+                _searchList.add(val)
+              },
+              setState(() {
+                _searchList;
+              })
             }
           },
           decoration: InputDecoration(
             hintText: "Enter name or email",
             border: InputBorder.none,
+           
             
             
           ),
           autofocus: true,
+           
 
           ):Text("CLASH"),
           
@@ -49,9 +58,11 @@ class _MyHomePageState extends State<MyHomePage> {
              _isSearching = ! _isSearching;
             });
 
-          }, icon: Icon(Icons.search)),
-          IconButton(onPressed: (){
+          }, icon: Icon(_isSearching ? Icons.cancel:Icons.search)),
+          IconButton(onPressed: ()async{
+            await APIs.getSelfInfo();
             Navigator.push(context, MaterialPageRoute(builder: (_)=> ProfileScreen(  user: APIs.me)));
+        //   Navigator.push(context, MaterialPageRoute(builder: (_)=> LoginScreen()));
           }, icon: Icon(Icons.settings)),
 
         ],
@@ -75,11 +86,11 @@ class _MyHomePageState extends State<MyHomePage> {
         }
         if(lists.isNotEmpty){
         return ListView.builder(
-          itemCount: lists.length,
+          itemCount:_isSearching ? _searchList.length : lists.length,
           
           itemBuilder: (context,index){
             // return Text('name : ${lists[index]}');
-            return ChatUserCard(user: lists[index]);
+            return _isSearching ? ChatUserCard(user: _searchList[index]):ChatUserCard(user: lists[index]);
           },);}else{
             return const Center(child: Text("No contacts"));
           }
