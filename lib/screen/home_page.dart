@@ -20,7 +20,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    mq = MediaQuery.of(context).size;
+   // mq = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -61,8 +61,14 @@ class _MyHomePageState extends State<MyHomePage> {
           }, icon: Icon(_isSearching ? Icons.cancel:Icons.search)),
           IconButton(onPressed: ()async{
             await APIs.getSelfInfo();
-            Navigator.push(context, MaterialPageRoute(builder: (_)=> ProfileScreen(  user: APIs.me)));
-        //   Navigator.push(context, MaterialPageRoute(builder: (_)=> LoginScreen()));
+            debugPrint(APIs.me.toString());
+            if(APIs.me!=null){
+                 Navigator.push(context, MaterialPageRoute(builder: (_)=> ProfileScreen(  user: APIs.me)));
+            }else{
+               Navigator.push(context, MaterialPageRoute(builder: (_)=> LoginScreen()));
+            }
+          
+           // Navigator.push(context, MaterialPageRoute(builder: (_)=> LoginScreen()));
           }, icon: Icon(Icons.settings)),
 
         ],

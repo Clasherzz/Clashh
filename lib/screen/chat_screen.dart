@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +8,7 @@ import 'package:flutter_application_2/main.dart';
 import 'package:flutter_application_2/models/message.dart';
 import 'package:flutter_application_2/models/user.dart';
 import 'package:flutter_application_2/widgets/message_card.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ChatScreen extends StatefulWidget {
   final ChatUser user;
@@ -21,7 +24,7 @@ class _ChatScreenState extends State<ChatScreen> {
 // double height = mq.size.height;
   @override
   Widget build(BuildContext context) {
-    mq = MediaQuery.sizeOf(context);
+   // mq = MediaQuery.sizeOf(context);
     return SafeArea(
       child:Scaffold(
       appBar: AppBar(
@@ -46,10 +49,7 @@ class _ChatScreenState extends State<ChatScreen> {
           case ConnectionState.done:
            List<Message> lists = [];
        
-        // if(snapshot.hasData){
-        //    final data = snapshot.data?.docs;
-        //   lists = data?.map((e) => ChatUser.fromJson(e.data()),).toList() ?? [];
-        // }
+        
         if(lists.isNotEmpty){
         return ListView.builder(
           itemCount: lists.length,
@@ -67,11 +67,7 @@ class _ChatScreenState extends State<ChatScreen> {
        
       },
 
-      // body: Column(
-      //   children: [
-      //     ChatUser(),
-      //     ChatUser(),
-      //   ],
+      
       
       
       ),
@@ -81,10 +77,7 @@ class _ChatScreenState extends State<ChatScreen> {
           
           _chatInput()]
      ),
-    //  body: Column(
-    //     children: [
-    //       _chatInput()
-    //     ],),
+    
     ),
     );
   }
@@ -103,8 +96,10 @@ class _ChatScreenState extends State<ChatScreen> {
        ClipRRect(
           borderRadius: BorderRadius.circular(10),
         child: CachedNetworkImage(
-          width:mq.width * 0.055,
-         height: mq.height * 0.055,
+        //   width:mq.width * 0.055,
+        //  height: mq.height * 0.055,
+         width: 1,
+         height:1,
           imageUrl: "https://images.app.goo.gl/Aaw1bYY4cBVs3Dbw8",
           placeholder: (context,url)=>  const CircularProgressIndicator(),
           errorWidget: (context,url,error)=>const Icon(Icons.error),
@@ -156,12 +151,32 @@ class _ChatScreenState extends State<ChatScreen> {
 
        ),),
       IconButton(
-        onPressed: (){}, 
+        onPressed: () async{
+            debugPrint("hello");
+             final ImagePicker picker = ImagePicker();
+                  final XFile? image = 
+                    await picker.pickImage(source: ImageSource.gallery);
+                    if(image!=null){
+                      print("entered:${image.path}");
+                      Navigator.pop(context);
+                    }else{
+                      print("not");
+                    }
+        }, 
         icon: Icon(Icons.image),
         color: Colors.grey,
       ),
       IconButton(
-        onPressed: (){}, 
+        onPressed: ()async{
+           final ImagePicker picker = ImagePicker();
+                  final XFile? image = 
+                    await picker.pickImage(source: ImageSource.camera);
+                    if(image!=null){
+                      debugPrint("Camera:${image.path}");
+                    //  Navigator.pop(context);
+                    }
+
+        }, 
         icon: Icon(Icons.camera_alt_rounded),
         color: Colors.grey,
       ),
@@ -169,7 +184,7 @@ class _ChatScreenState extends State<ChatScreen> {
         onPressed: () {
 
         } ,
-        // color:
+        
         child: Icon(
           Icons.send,
 

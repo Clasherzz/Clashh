@@ -1,9 +1,12 @@
 import 'dart:async';
 import 'dart:core';
+import 'dart:developer';
+import 'dart:io';
 
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_application_2/models/message.dart';
 import 'package:flutter_application_2/models/user.dart';
 class APIs{
@@ -11,6 +14,9 @@ class APIs{
   
   
   static FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+  static FirebaseStorage firebaseStorage = FirebaseStorage.instance;
+
   static User get user => auth.currentUser!;
 
   static late ChatUser me;
@@ -71,6 +77,23 @@ class APIs{
     );
   }
 
+
+
+  static Future<void> updateProfile(File file) async{
+    final ext = file.path.split('.').last;
+    final ref = firebaseStorage.ref().child('profilePictures/${user.uid}.${ext}');
+    await ref.putFile(file,).then((p)=>{
+      log("completion: ${p}/1000")
+    });
+
+    me.image =await  ref.getDownloadURL();
+    await firestore.collection("users").doc(user.uid).update(
+      {
+        "image":me.image
+      }
+    );
+  }
+
   static String getConversationId(String id){
     return user.uid.hashCode <= id.hashCode ? '${user.uid}_${id}' : '${id}_${user.uid}';
   }
@@ -103,4 +126,21 @@ class APIs{
   // static Future<void> sendChatImage(ChatUser chatuser,File file){
   //    var ref = 
   // }
+  static Future<void> sendChatImage(ChatUser chatUser,File file) async{
+    final ext = file.path.split('.').last;
+    final ref = firebaseStorage.ref().child('image/${getConversationId(chatUser.id)}/${DateTime.now().millisecondsSinceEpoch.toString()}.${ext}');
+    await ref.putFile(file,).then((p)=>{
+      log("completion: ${p}/1000")
+    });
+
+    me.image =await  ref.getDownloadURL();
+    await firestore.collection("users").doc(user.uid).update(
+      {
+        "image":me.image
+      }
+    );
+  }
+
+
+  
 }
