@@ -16,11 +16,22 @@ class _MessageCardState extends State<MessageCard> {
   
   @override
   Widget build(BuildContext context) {
-    return APIs.me.id == widget.message.toId ? _greenMessage() : _blueMessage();
+    return APIs.me.id == widget.message.fromId ? Column(
+    children: [
+      _greenMessage(),
+      SizedBox(height: 10,)
+    ] ): 
+    Column(children: [
+
+      _blueMessage(),
+      SizedBox(height:10)
+    ]
+    );
   }
 
   Widget _blueMessage(){
     return Row(children: [
+      SizedBox(width:2),
   
       //mainAxisAlignment: MainAxisAlignment.spaceBetween
       Flexible(
@@ -28,6 +39,7 @@ class _MessageCardState extends State<MessageCard> {
         padding: EdgeInsets.all(1),
         
         decoration: BoxDecoration(
+          
           color: Colors.grey,
           border: Border.all(color: Colors.black),
           borderRadius: BorderRadius.only(
