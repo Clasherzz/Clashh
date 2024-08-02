@@ -13,9 +13,10 @@ class MessageCard extends StatefulWidget {
 }
 
 class _MessageCardState extends State<MessageCard> {
+  
   @override
   Widget build(BuildContext context) {
-    return APIs.user.uid == widget.message.fromId ? _greenMessage() : _blueMessage();
+    return APIs.me.id == widget.message.toId ? _greenMessage() : _blueMessage();
   }
 
   Widget _blueMessage(){
@@ -49,10 +50,10 @@ class _MessageCardState extends State<MessageCard> {
       //mainAxisAlignment: MainAxisAlignment.spaceBetween
       Flexible(
       child:Container(
-        padding: EdgeInsets.all(1),
+        padding: EdgeInsets.only(right: 1),
         
         decoration: BoxDecoration(
-          color: Colors.grey,
+          color: Colors.green,
           border: Border.all(color: Colors.black),
           borderRadius: BorderRadius.only(
             topLeft:Radius.circular(30) ,

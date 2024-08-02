@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/apis/apis.dart';
 import 'package:flutter_application_2/main.dart';
@@ -59,17 +60,35 @@ class _MyHomePageState extends State<MyHomePage> {
             });
 
           }, icon: Icon(_isSearching ? Icons.cancel:Icons.search)),
-          IconButton(onPressed: ()async{
-            await APIs.getSelfInfo();
-            debugPrint(APIs.me.toString());
-            if(APIs.me!=null){
-                 Navigator.push(context, MaterialPageRoute(builder: (_)=> ProfileScreen(  user: APIs.me)));
-            }else{
-               Navigator.push(context, MaterialPageRoute(builder: (_)=> LoginScreen()));
-            }
           
-           // Navigator.push(context, MaterialPageRoute(builder: (_)=> LoginScreen()));
-          }, icon: Icon(Icons.settings)),
+          IconButton(
+  onPressed: () async {
+    // Get the current user
+    User? user = FirebaseAuth.instance.currentUser;
+
+    if (user != null) {
+      await APIs.getSelfInfo();
+      // User is logged in, navigate to the Profile screen
+      Navigator.push(
+        
+        context,
+        MaterialPageRoute(
+          builder: (_) => ProfileScreen(user: APIs.me),
+        ),
+      );
+    } else {
+      // User is not logged in, navigate to the Login screen
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => LoginScreen(),
+        ),
+      );
+    }
+  },
+  icon: Icon(Icons.settings),
+)
+
 
         ],
       ), 

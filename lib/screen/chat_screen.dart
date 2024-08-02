@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_application_2/apis/apis.dart';
 import 'package:flutter_application_2/main.dart';
 import 'package:flutter_application_2/models/message.dart';
 import 'package:flutter_application_2/models/user.dart';
@@ -37,7 +38,7 @@ class _ChatScreenState extends State<ChatScreen> {
         children: [
           Expanded(
             child: StreamBuilder(
-    stream: null ,
+    stream: APIs.getAllMessages(widget.user) ,
       builder: (context,snapshot){
         switch(snapshot.connectionState){
           case ConnectionState.waiting:
@@ -47,7 +48,11 @@ class _ChatScreenState extends State<ChatScreen> {
           
           case ConnectionState.active:
           case ConnectionState.done:
+           final data = snapshot.data?.docs;
            List<Message> lists = [];
+          lists =  data?.map((e)=>Message.fromJson(e.data())).toList()??[];
+
+
        
         
         if(lists.isNotEmpty){
@@ -86,8 +91,10 @@ class _ChatScreenState extends State<ChatScreen> {
 
     return InkWell(
       onTap: (){Navigator.pop(context);},
-    
-    child: Row(children: [
+    child: StreamBuilder(
+      stream: APIs.getUserInfo(widget.user),
+      builder:(context,snapshot){
+     return Row(children: [
       IconButton(onPressed: (){
         Navigator.pop(context);
       }, 
@@ -96,8 +103,7 @@ class _ChatScreenState extends State<ChatScreen> {
        ClipRRect(
           borderRadius: BorderRadius.circular(10),
         child: CachedNetworkImage(
-        //   width:mq.width * 0.055,
-        //  height: mq.height * 0.055,
+       
          width: 1,
          height:1,
           imageUrl: "https://images.app.goo.gl/Aaw1bYY4cBVs3Dbw8",
@@ -125,7 +131,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
 
           ],)
-    ],),);
+    ],);}),);
   }
 
   Widget _chatInput(){
@@ -181,7 +187,13 @@ class _ChatScreenState extends State<ChatScreen> {
         color: Colors.grey,
       ),
       MaterialButton(
-        onPressed: () {
+        onPressed: () async{
+          if(_textcontroller!=null){
+            print("me:${APIs.me.id}");
+            print("wideget.user.id:${widget.user.id}");
+            APIs.sendMessage(widget.user, _textcontroller.text);
+            _textcontroller.text ="";
+          }
 
         } ,
         

@@ -3,7 +3,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_application_2/apis/apis.dart';
 import 'package:flutter_application_2/main.dart';
+import 'package:flutter_application_2/models/message.dart';
 import 'package:flutter_application_2/screen/chat_screen.dart';
 import '../models/user.dart';
 
@@ -20,9 +22,18 @@ class _ChatUserCardState extends State<ChatUserCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
+      child:StreamBuilder(
+      stream: APIs.getLastMessage(widget.user), 
       
-      child:ListTile(
+      builder: (context,snapshot){
+      final data = snapshot.data?.docs;
+      late Message _message;
+      if(data!=null && data.first.exists){
+        _message = Message.fromJson(data.first.data());
+      }
+      return ListTile(
         onTap: (){
+            print("at Usercard${widget.user.id}");
             Navigator.push(context,MaterialPageRoute(builder: (_) => ChatScreen(user: widget.user) ));
 
         },
@@ -53,7 +64,7 @@ class _ChatUserCardState extends State<ChatUserCard> {
           decoration: BoxDecoration(color: Colors.greenAccent,borderRadius: BorderRadius.circular(10)),
 
         ),
-      )
+      );})
     );
   }
 }

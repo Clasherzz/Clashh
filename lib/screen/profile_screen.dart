@@ -76,12 +76,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
           TextFormField(
             initialValue: widget.user.name,
             onSaved: (value) => APIs.me.name = value ?? "",
+            onChanged: (value) => APIs.me.name = value ?? "",
             validator: (value) => value != null && value.isNotEmpty ? null : 'Required Field' ,
             decoration: InputDecoration(prefixIcon:Icon(Icons.person,),label:Text("Name")),
           ),
           TextFormField(
             initialValue: widget.user.about,
             onSaved: (value) => APIs.me.about = value ?? "",
+             onChanged: (value) => APIs.me.name = value ?? "",
             validator: (value) => value != null && value.isNotEmpty ? null : 'Required Field' ,
             decoration: InputDecoration(prefixIcon:Icon(Icons.info,),label:Text("About")),
           ),
@@ -90,8 +92,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
             label: Text("EDIT"),
             
             
-            onPressed: (){
-              APIs.updateUserInfo();
+            onPressed: () async{
+              print("about${APIs.me.about}");
+              await APIs.updateUserInfo();
             })
 
         ]
@@ -144,12 +147,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 IconButton(onPressed: ()async{
                   final ImagePicker picker = ImagePicker();
                   final XFile? image = 
-                    await picker.pickImage(source: ImageSource.camera);
+                    await picker.pickImage(source: ImageSource.gallery);
                     if(image!=null){
                       setState(() {
                         _image = image.path;
 
                       });
+                      APIs.updateProfile(image as File);
                       Navigator.pop(context);
                     }
                   
@@ -157,7 +161,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 
                  
                  icon: Icon(Icons.image),),
-                IconButton(onPressed: (){}, icon: Icon(Icons.camera))
+                IconButton(onPressed: ()async{
+                   final ImagePicker picker = ImagePicker();
+                  final XFile? image = 
+                    await picker.pickImage(source: ImageSource.camera);
+                    if(image!=null){
+                      setState(() {
+                        _image = image.path;
+
+                      });
+                      APIs.updateProfile(image as File);
+                      Navigator.pop(context);
+                    }
+
+                }, icon: Icon(Icons.camera))
                 ]
                 )
               ],

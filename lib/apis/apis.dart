@@ -115,6 +115,8 @@ class APIs{
       sent: time
     );
 
+    print("fromid:${message.fromId}touserid:${message.toId}");
+
 
     final ref = firestore.collection('chats/${getConversationId(chatUser.id)}/messages');
     await ref.doc(time).set(message.toJson());
@@ -141,6 +143,22 @@ class APIs{
     );
   }
 
+
+
+
+
+  static Stream<QuerySnapshot<Map<String,dynamic>>>   getUserInfo(ChatUser chatUser){
+    return firestore.collection("users").where("id",isEqualTo: chatUser.id).snapshots();
+  }
+
+  static Future<void> updateActiveStatus(bool isOnline) async{
+    firestore.collection("users").doc(user.uid).update({'is_online':isOnline,"last_active":DateTime.now().millisecondsSinceEpoch.toString()});
+  }
+  
+
+   static Stream<QuerySnapshot<Map<String,dynamic>>>   getLastMessage(ChatUser chatUser){
+    return firestore.collection("chats/${getConversationId(chatUser.id)}/messages").limit(1).snapshots();
+   }
 
   
 }
