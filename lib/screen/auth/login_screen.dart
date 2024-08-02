@@ -42,6 +42,7 @@ class _MyHomePageState extends State<LoginScreen> {
     _signInWithGoogle().then((user){
       print("after then\n");
       print(user?.credential);
+      Navigator.pop(context);
     });
   }
   Widget build(BuildContext context) {

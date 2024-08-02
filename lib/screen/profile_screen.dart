@@ -76,14 +76,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
           TextFormField(
             initialValue: widget.user.name,
             onSaved: (value) => APIs.me.name = value ?? "",
-            onChanged: (value) => APIs.me.name = value ?? "",
+           // onChanged: (value) => APIs.me.name = value ?? "",
             validator: (value) => value != null && value.isNotEmpty ? null : 'Required Field' ,
             decoration: InputDecoration(prefixIcon:Icon(Icons.person,),label:Text("Name")),
           ),
           TextFormField(
             initialValue: widget.user.about,
             onSaved: (value) => APIs.me.about = value ?? "",
-             onChanged: (value) => APIs.me.name = value ?? "",
+             //onChanged: (value) => APIs.me.name = value ?? "",
             validator: (value) => value != null && value.isNotEmpty ? null : 'Required Field' ,
             decoration: InputDecoration(prefixIcon:Icon(Icons.info,),label:Text("About")),
           ),
@@ -93,8 +93,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
             
             
             onPressed: () async{
-              print("about${APIs.me.about}");
+              if(_formKey.currentState!.validate()){
+
+                _formKey.currentState!.save();
+
+                print("about${APIs.me.about}");
               await APIs.updateUserInfo();
+              }
+              
             })
 
         ]

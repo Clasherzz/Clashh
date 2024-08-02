@@ -6,9 +6,11 @@ import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_application_2/models/message.dart';
 import 'package:flutter_application_2/models/user.dart';
+
 class APIs{
   static FirebaseAuth auth = FirebaseAuth.instance;
   
@@ -16,6 +18,8 @@ class APIs{
   static FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   static FirebaseStorage firebaseStorage = FirebaseStorage.instance;
+
+  static FirebaseMessaging messaging = FirebaseMessaging.instance;
 
   static User get user => auth.currentUser!;
 
@@ -57,6 +61,8 @@ class APIs{
       await firestore.collection("users").doc(user.uid).get().then((user) async {
         if(user.exists){
             me = ChatUser.fromJson(user.data()!);
+            getMessagingPushToken();
+            
         }else{
           await createUser().then((value)=>{
             getSelfInfo()
@@ -158,6 +164,17 @@ class APIs{
 
    static Stream<QuerySnapshot<Map<String,dynamic>>>   getLastMessage(ChatUser chatUser){
     return firestore.collection("chats/${getConversationId(chatUser.id)}/messages").limit(1).snapshots();
+   }
+
+   static Future<void> getMessagingPushToken() async{ 
+    await messaging.requestPermission();
+    messaging.getToken().then((val)=>{
+      if(val!=null){
+        me.pushToken = val,
+        print("token:${me.pushToken}")
+      }
+
+    });
    }
 
   
