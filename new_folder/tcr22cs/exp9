@@ -1,0 +1,158 @@
+mysql> select name from seekers where pincode in (select pincode from host);
++------------+
+| name       |
++------------+
+| K Gayathri |
++------------+
+1 row in set (0.02 sec)
+
+
+//selecting all the indivuduals participating in the calamity crisis.(both hosts and seekeers)
+mysql> select name,phone_no from host union  select name,phone_no from seekers;
++------------+------------+
+| name       | phone_no   |
++------------+------------+
+| Govind     | 9495657944 |
+| Shreya     |   98347484 |
+| Vishnu     |  986756764 |
+| Hadayath   |  986756764 |
+| Harsh      |  986756764 |
+| Rahul      | 9123456789 |
+| Anjali     | 9876543210 |
+| Vikram     | 9988776655 |
+| Arjun      | 9234567890 |
+| Meera      | 9345678901 |
+| Raj        | 9456789012 |
+| Priya      | 9567890123 |
+| K Gayathri | 9443535765 |
+|  neha      |  944353546 |
+| Veratti    | 9846261610 |
++------------+------------+
+15 rows in set (0.00 sec)
+
+
+
+//getting common pincodes that can be matched
+mysql> select pincode from host intersect select pincode from seekers;
++---------+
+| pincode |
++---------+
+|  680620 |
++---------+
+1 row in set (0.00 sec)
+
+
+
+//has to do except 
+
+
+
+
+joining statements
+
+mysql> SELECT seekers.name, seekers.phone_no 
+    -> FROM seekers 
+    -> INNER JOIN host 
+    -> ON seekers.pincode <= host.pincode + 10 
+    -> AND seekers.pincode >= host.pincode - 10;
++------------+------------+
+| name       | phone_no   |
++------------+------------+
+|  neha      |  944353546 |
+| K Gayathri | 9443535765 |
+| Meera      | 9345678901 |
+| Arjun      | 9234567890 |
+| K Gayathri | 9443535765 |
+| Meera      | 9345678901 |
+| Veratti    | 9846261610 |
+|  neha      |  944353546 |
+| K Gayathri | 9443535765 |
+| Raj        | 9456789012 |
++------------+------------+
+10 rows in set (0.03 sec)
+
+
+
+mysql> SELECT seekers.name, seekers.phone_no, host.pincode
+    -> FROM seekers
+    -> LEFT JOIN host 
+    -> ON seekers.pincode <= host.pincode + 10 
+    -> AND seekers.pincode >= host.pincode - 10;
++------------+------------+---------+
+| name       | phone_no   | pincode |
++------------+------------+---------+
+| Arjun      | 9234567890 |  680600 |
+| Meera      | 9345678901 |  680610 |
+| Meera      | 9345678901 |  680620 |
+| Raj        | 9456789012 |  680630 |
+| Priya      | 9567890123 |    NULL |
+| K Gayathri | 9443535765 |  680630 |
+| K Gayathri | 9443535765 |  680610 |
+| K Gayathri | 9443535765 |  680620 |
+|  neha      |  944353546 |  680630 |
+|  neha      |  944353546 |  680620 |
+| Veratti    | 9846261610 |  680630 |
++------------+------------+---------+
+11 rows in set (0.00 sec)
+
+
+mysql> SELECT seekers.name, seekers.phone_no, host.pincode
+    -> FROM seekers
+    -> RIGHT JOIN host 
+    -> ON seekers.pincode <= host.pincode + 10 
+    -> AND seekers.pincode >= host.pincode - 10;
++------------+------------+---------+
+| name       | phone_no   | pincode |
++------------+------------+---------+
+|  neha      |  944353546 |  680620 |
+| K Gayathri | 9443535765 |  680620 |
+| Meera      | 9345678901 |  680620 |
+| NULL       |       NULL |  690630 |
+| NULL       |       NULL |  690631 |
+| NULL       |       NULL |  790631 |
+| NULL       |       NULL |  697631 |
+| Arjun      | 9234567890 |  680600 |
+| K Gayathri | 9443535765 |  680610 |
+| Meera      | 9345678901 |  680610 |
+| Veratti    | 9846261610 |  680630 |
+|  neha      |  944353546 |  680630 |
+| K Gayathri | 9443535765 |  680630 |
+| Raj        | 9456789012 |  680630 |
++------------+------------+---------+
+14 rows in set (0.00 sec)
+
+(SELECT seekers.name, seekers.phone_no, host.pincode
+FROM seekers
+LEFT JOIN host 
+ON seekers.pincode <= host.pincode + 10 
+AND seekers.pincode >= host.pincode - 10)
+
+UNION
+
+(SELECT seekers.name, seekers.phone_no, host.pincode
+FROM seekers
+RIGHT JOIN host 
+ON seekers.pincode <= host.pincode + 10 
+AND seekers.pincode >= host.pincode - 10);
++------------+------------+---------+
+| name       | phone_no   | pincode |
++------------+------------+---------+
+| Arjun      | 9234567890 |  680600 |
+| Meera      | 9345678901 |  680610 |
+| Meera      | 9345678901 |  680620 |
+| Raj        | 9456789012 |  680630 |
+| Priya      | 9567890123 |    NULL |
+| K Gayathri | 9443535765 |  680630 |
+| K Gayathri | 9443535765 |  680610 |
+| K Gayathri | 9443535765 |  680620 |
+|  neha      |  944353546 |  680630 |
+|  neha      |  944353546 |  680620 |
+| Veratti    | 9846261610 |  680630 |
+| NULL       |       NULL |  690630 |
+| NULL       |       NULL |  690631 |
+| NULL       |       NULL |  790631 |
+| NULL       |       NULL |  697631 |
++------------+------------+---------+
+15 rows in set (0.00 sec)
+
+

@@ -1,0 +1,23 @@
+mysql> create view host_with_accomadate_2 as select name,phone_no from host where max_no = 2;
+Query OK, 0 rows affected (0.16 sec)
+
+mysql> select * from host_with_accomadate_no_2;
+ERROR 1146 (42S02): Table 'disaster_management.host_with_accomadate_no_2' doesn't exist
+mysql> select * from host_with_accomadate_2;
++----------+------------+
+| name     | phone_no   |
++----------+------------+
+| Shreya   |   98347484 |
+| Vishnu   |  986756764 |
+| Hadayath |  986756764 |
+| Harsh    |  986756764 |
+| Anjali   | 9876543210 |
++----------+------------+
+5 rows in set (0.00 sec)
+
+
+
+
+
+
+
